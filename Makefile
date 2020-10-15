@@ -5,19 +5,31 @@ vpath %.c src
 RM          := rm -f
 RMDIR       := rm -rf
 
+BUILD_TYPE  := Debug
+
+ifeq ($(BUILD_TYPE),Debug)
 STANDARD    := -std=c17
 DIAGNOSTICS := -Wall -Wextra -Wpedantic
-DEBUG       := -Og -ggdb3
+OPTIMIZATION:= -Og
+DEBUG       := -ggdb3
 ANALYZER    := -fanalyzer -Wanalyzer-too-complex
 SANITIZER   := -fsanitize=address,leak,undefined
-#PROFILING   := -pg -fprofile-arcs --coverage
+PROFILING   := -pg -fprofile-arcs --coverage
+else
+STANDARD    := -std=c17
+DIAGNOSTICS := -Wall -Wextra -Wpedantic
+OPTIMIZATION:= -O3 -march=native
+DEBUG       := -ggdb3
+ANALYZER    := -fanalyzer -Wanalyzer-too-complex
+endif
 
 CC          := gcc
-CFLAGS      := $(STANDARD) $(DIAGNOSTICS) $(DEBUG) $(ANALYZER) $(SANITIZER) $(PROFILING)
+CFLAGS      := $(STANDARD) $(DIAGNOSTICS) $(OPTIMIZATION) $(DEBUG) $(ANALYZER) $(SANITIZER) #$(PROFILING)
 CPPFLAGS    := -Iinclude -D_GNU_SOURCE
 LDFLAGS     := -Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now
 LDLIBS      :=
 
+HDRS        := $(notdir $(wildcard include/*.h))
 SRCS        := $(notdir $(wildcard src/*.c))
 OBJS        := $(patsubst %.c,%.o,$(SRCS))
 
@@ -31,17 +43,24 @@ $(TARGET): $(OBJS)
 %.o: %.c
 	$(COMPILE.c) -fPIC -o $@ $<
 
+.PHONY: tests
+tests: $(TARGET)
+	$(MAKE) -C tests/
+
 PHONY: check
 check: $(TARGET)
 	$(MAKE) -C tests/ check
 
 .PHONY: install
 install: $(TARGET)
-	@echo This feature has not yet been implemented.
+	install --owner=root --group=root --mode=u+rwx,g+rx,g-w,o+rx,o-w -T $(TARGET) /usr/lib/$(TARGET)
+	[ -d /usr/include/libcx/ ] || mkdir /usr/include/libcx/
+	$(foreach HEADER,$(HDRS),install --owner=root --group=root --mode=u+rw,u-x,g+r,g-wx,o+r,o-wx -T `pwd`/include/$(HEADER) /usr/include/libcx/$(HEADER);)
 
 .PHONY: uninstall
 uninstall:
-	@echo This feature has not yet been implemented.
+	[ -e /usr/lib/$(TARGET) ] && rm -f /usr/lib/$(TARGET) || true
+	[ -d /usr/include/libcx/ ] && rm -rf /usr/include/libcx || true
 
 .PHONY: help
 help:

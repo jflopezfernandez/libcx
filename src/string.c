@@ -35,10 +35,6 @@
  *
  */
 size_t string_length(const char* string) {
-    if (string == NULL) {
-        return 0;
-    }
-
     size_t length = 0;
 
     while (string[length] != '\0') {
@@ -84,7 +80,8 @@ char* copy_string(const char* original) {
  * hold the entire first string (excluding the null terminator)
  * and the entire second string (including the null terminator).
  * In other words, the length of the returned string is equal
- * to strlen(first) + strlen(second) + 1.
+ * to the following equation.
+ * \f[ \text{strlen}\left(\text{combined string}\right) = \text{strlen}\left(\text{first}\right) + \text{strlen}\left(\text{second}\right) + 1 \f]
  *
  * @param[in] first The first string.
  * @param[in] second The string to append to the first string.

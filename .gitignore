@@ -60,3 +60,15 @@ docs/perlmod
 
 # Valgrind
 **/vgcore.*
+**/callgrind.out.*
+
+# Profiling Data
+**/*.gcda
+**/*.gcno
+**/*.gcov
+**/gmon.out
+
+# Global (Tags Files)
+GPATH
+GRTAGS
+GTAGS

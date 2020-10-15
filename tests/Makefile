@@ -8,10 +8,10 @@ DIAGNOSTICS := -Wall -Wextra -Wpedantic
 DEBUG       := -Og -ggdb3
 ANALYZER    := -fanalyzer -Wanalyzer-too-complex
 SANITIZER   := -fsanitize=address,leak,undefined
-#PROFILING   := -pg -fprofile-arcs --coverage
+PROFILING   := -pg -fprofile-arcs --coverage
 
 CC          := gcc
-CFLAGS      := $(STANDARD) $(DIAGNOSTICS) $(DEBUG) $(ANALYZER) $(SANITIZER) $(PROFILING)
+CFLAGS      := $(STANDARD) $(DIAGNOSTICS) $(DEBUG) $(ANALYZER) $(SANITIZER) #$(PROFILING)
 CPPFLAGS    := -Iinclude -I../include -D_GNU_SOURCE
 LDFLAGS     := -L../ -Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now,-L../,-rpath,../
 LDLIBS      := -lcx -lcheck
@@ -39,7 +39,7 @@ clean: clean-profiling-data
 
 .PHONY: clean-profiling-data
 clean-profiling-data:
-	$(RM) ./*.{gcda,gcno,gcov,out}
+	$(RM) ./*.{gcda,gcno,gcov,out} ./callgrind.out.*
 
 .PHONY: distclean
 distclean: clean clean-profiling-data
