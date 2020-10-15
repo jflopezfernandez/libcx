@@ -53,10 +53,10 @@ Mkfile.old
 dkms.conf
 
 # Doxygen
-docs/html
-docs/latex
-docs/man
-docs/perlmod
+docs/html/
+docs/latex/
+docs/man/man3/samples/
+docs/perlmod/
 
 # Valgrind
 **/vgcore.*

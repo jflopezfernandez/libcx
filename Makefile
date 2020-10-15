@@ -85,7 +85,7 @@ clean-tags:
 
 .PHONY: clean-docs
 clean-docs:
-	$(RMDIR) docs/{html,latex,man,perlmod}/
+	$(RMDIR) docs/{html,latex,perlmod}/
 
 .PHONY: distclean
 distclean: clean clean-tags clean-docs
