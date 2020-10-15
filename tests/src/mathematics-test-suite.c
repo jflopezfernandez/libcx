@@ -3,18 +3,42 @@
 #include <libcx.h>
 #include <libcx-test-suites.h>
 
+/**
+ * Absolute Value Test
+ *
+ * @test test_abs
+ *
+ * @todo Write man page for this function.
+ *
+ */
 START_TEST(test_abs) {
     ck_assert_int_eq(abs(-1), 1);
     ck_assert_int_eq(abs(0), 0);
     ck_assert_int_eq(abs(1), 1);
 }
 
+/**
+ * Greatest Common Denominator Test
+ *
+ * @test test_gcd
+ *
+ * @todo Write man page for this function.
+ *
+ */
 START_TEST(test_gcd) {
     ck_assert_int_eq(gcd(1,2),1);
     ck_assert_int_eq(gcd(2,4),2);
     ck_assert_int_eq(gcd(15,45),15);
 }
 
+/**
+ * Least Common Multiple Test
+ *
+ * @test test_lcm
+ *
+ * @todo Write man page for this function.
+ *
+ */
 START_TEST(test_lcm) {
     ck_assert_int_eq(lcm(1,2),2);
     ck_assert_int_eq(lcm(2,3),6);
@@ -23,6 +47,14 @@ START_TEST(test_lcm) {
     ck_assert_int_eq(lcm(3,7),21);
 }
 
+/**
+ * Is-Prime Test
+ *
+ * @test test_is_prime
+ *
+ * @todo Write man page for this function.
+ *
+ */
 START_TEST(test_is_prime) {
     ck_assert_int_eq(is_prime(1), true);
     ck_assert_int_eq(is_prime(2), true);

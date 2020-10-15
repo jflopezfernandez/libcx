@@ -55,6 +55,8 @@ size_t string_length(const char* string) {
  *
  * @returns Heap-allocated copy of the original string.
  *
+ * @todo Write man page for this function.
+ *
  */
 char* copy_string(const char* original) {
     /** Get the length of the original string. */
@@ -88,6 +90,8 @@ char* copy_string(const char* original) {
  *
  * @returns A heap-allocated string containing both original
  * strings, minus the null terminator of the first string.
+ *
+ * @todo Write man page for this function.
  *
  */
 char* concatenate_strings(const char* first, const char* second) {

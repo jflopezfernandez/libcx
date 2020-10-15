@@ -35,6 +35,8 @@
  *
  * @returns The absolute value of the integer x.
  *
+ * @todo Write man page for this function.
+ *
  */
 int abs(int x) {
     return ((x < 0) ? -(x) : (x));
@@ -60,6 +62,8 @@ int abs(int x) {
  * algorithm to work, both numbers must be greater than zero
  * (obviously), as otherwise the algorithm would never
  * terminate.
+ *
+ * @todo Write man page for this function.
  *
  */
 int gcd(int a, int b) {
@@ -91,6 +95,8 @@ int gcd(int a, int b) {
  * gcd() function, since it is implicitly used in the final
  * calculation.
  *
+ * @todo Write man page for this function.
+ *
  */
 int lcm(int a, int b) {
     return (a * b) / gcd(a,b);
@@ -109,6 +115,8 @@ int lcm(int a, int b) {
  *
  * @note As is customary in mathematics, \f$1\f$ is
  * considered prime.
+ *
+ * @todo Write man page for this function.
  *
  */
 bool_t is_prime(int n) {

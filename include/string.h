@@ -71,6 +71,8 @@ string_length(const char* string);
  *
  * @returns Heap-allocated copy of the original string.
  *
+ * @todo Write man page for this function.
+ *
  */
 char*
 __attributes_copy_string
@@ -103,6 +105,8 @@ copy_string(const char* original);
  *
  * @returns A heap-allocated string containing both original
  * strings, minus the null terminator of the first string.
+ *
+ * @todo Write man page for this function.
  *
  */
 char*
