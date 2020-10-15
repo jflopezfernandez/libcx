@@ -29,6 +29,7 @@ CPPFLAGS    := -Iinclude -D_GNU_SOURCE
 LDFLAGS     := -Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now
 LDLIBS      :=
 
+MAN3        := $(notdir $(wildcard docs/man/man3/*.3))
 HDRS        := $(notdir $(wildcard include/*.h))
 SRCS        := $(notdir $(wildcard src/*.c))
 OBJS        := $(patsubst %.c,%.o,$(SRCS))
@@ -56,11 +57,13 @@ install: $(TARGET)
 	install --owner=root --group=root --mode=u+rwx,g+rx,g-w,o+rx,o-w -T $(TARGET) /usr/lib/$(TARGET)
 	[ -d /usr/include/libcx/ ] || mkdir /usr/include/libcx/
 	$(foreach HEADER,$(HDRS),install --owner=root --group=root --mode=u+rw,u-x,g+r,g-wx,o+r,o-wx -T `pwd`/include/$(HEADER) /usr/include/libcx/$(HEADER);)
+	$(foreach MANPAGE3,$(MAN3),install --owner=root --group=root --mode=u+rw,u-x,g+r,g-wx,o+r,o-wx -T `pwd`/docs/man/man3/$(MANPAGE3) /usr/share/man/man3/$(MANPAGE3);)
 
 .PHONY: uninstall
 uninstall:
 	[ -e /usr/lib/$(TARGET) ] && rm -f /usr/lib/$(TARGET) || true
 	[ -d /usr/include/libcx/ ] && rm -rf /usr/include/libcx || true
+	$(foreach MANPAGE3,$(MAN3),[ -e /usr/share/man/man3/$(MANPAGE3) ] && rm -f /usr/share/man/man3/$(MANPAGE3) || true)
 
 .PHONY: help
 help:
