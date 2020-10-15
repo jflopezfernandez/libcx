@@ -1,17 +1,28 @@
 
 vpath %.c src
 
+#BUILD_TYPE  := Debug
+
 RM          := rm -f
 
+ifeq ($(BUILD_TYPE),Debug)
 STANDARD    := -std=c17
 DIAGNOSTICS := -Wall -Wextra -Wpedantic
-DEBUG       := -Og -ggdb3
+OPTIMIZATION:= -Og
+DEBUG       := -ggdb3
 ANALYZER    := -fanalyzer -Wanalyzer-too-complex
 SANITIZER   := -fsanitize=address,leak,undefined
 PROFILING   := -pg -fprofile-arcs --coverage
+else
+STANDARD    := -std=c17
+DIAGNOSTICS := -Wall -Wextra -Wpedantic
+OPTIMIZATION:= -O3 -march=native
+DEBUG       := -ggdb3
+ANALYZER    := -fanalyzer
+endif
 
 CC          := gcc
-CFLAGS      := $(STANDARD) $(DIAGNOSTICS) $(DEBUG) $(ANALYZER) $(SANITIZER) #$(PROFILING)
+CFLAGS      := $(STANDARD) $(DIAGNOSTICS) $(OPTIMIZATION) $(DEBUG) $(ANALYZER) $(SANITIZER) #$(PROFILING)
 CPPFLAGS    := -Iinclude -I../include -D_GNU_SOURCE
 LDFLAGS     := -L../ -Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now,-L../,-rpath,../
 LDLIBS      := -lcx -lcheck

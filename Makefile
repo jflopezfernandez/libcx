@@ -2,10 +2,10 @@
 vpath %.asm src
 vpath %.c src
 
+export BUILD_TYPE  := Release
+
 RM          := rm -f
 RMDIR       := rm -rf
-
-BUILD_TYPE  := Debug
 
 ifeq ($(BUILD_TYPE),Debug)
 STANDARD    := -std=c17
@@ -20,7 +20,7 @@ STANDARD    := -std=c17
 DIAGNOSTICS := -Wall -Wextra -Wpedantic
 OPTIMIZATION:= -O3 -march=native
 DEBUG       := -ggdb3
-ANALYZER    := -fanalyzer -Wanalyzer-too-complex
+ANALYZER    := -fanalyzer
 endif
 
 CC          := gcc

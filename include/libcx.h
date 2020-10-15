@@ -29,6 +29,8 @@
 #include <string.h>
 #include <assert.h>
 
+#include "types.h"
+#include "mathematics.h"
 #include "memory.h"
 #include "string.h"
 

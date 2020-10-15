@@ -31,7 +31,7 @@
  *
  */
 #ifndef __attributes_string_length
-#define __attributes_string_length __attribute__((nonnull(1)))
+#define __attributes_string_length __attribute__((nonnull(1), pure))
 #endif
 
 /*

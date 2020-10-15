@@ -25,6 +25,7 @@
 
 #include <libcx.h>
 
+#include "mathematics-test-suite.h"
 #include "memory-test-suite.h"
 #include "string-test-suite.h"
 
