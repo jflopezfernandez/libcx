@@ -21,28 +21,26 @@
  */
 
 #include <stddef.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-
 #include <check.h>
-
 #include <libcx.h>
-#include <libcx-test-suites.h>
 
-int main(void)
-{
-    Suite* main_test_suite = suite_create("libcx Tests");
-    SRunner* test_runner = srunner_create(main_test_suite);
+START_TEST(test_allocation_function_returns_nonnull) {
+    char* test_block = allocate_memory_block(1024);
+    ck_assert_ptr_nonnull(test_block);
+    free(test_block);
+}
 
-    srunner_add_suite(test_runner, memory_test_suite());
-    srunner_add_suite(test_runner, string_test_suite());
+/**
+ * Test suite for the memory extension module.
+ *
+ */
+Suite* memory_test_suite(void) {
+    TCase* test_case_allocation_function_returns_nonnull = tcase_create("Allocation returns non-null");
+    tcase_add_test(test_case_allocation_function_returns_nonnull, test_allocation_function_returns_nonnull);
 
-    srunner_run_all(test_runner, CK_VERBOSE);
+    Suite* memory_module_test_suite = suite_create("Memory Module Test Suite");
+    suite_add_tcase(memory_module_test_suite, test_case_allocation_function_returns_nonnull);
 
-    int tests_failed = srunner_ntests_failed(test_runner);
-
-    srunner_free(test_runner);
-
-    return tests_failed;
+    return memory_module_test_suite;
 }

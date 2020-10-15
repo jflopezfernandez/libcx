@@ -1,18 +1,25 @@
 
 vpath %.c src
 
-RM := rm -f
+RM          := rm -f
 
-CC := gcc
-CFLAGS := -std=c17 -Wall -Wextra -Wpedantic -Og -ggdb3 -L../
-CPPFLAGS := -Iinclude -I../include -D_GNU_SOURCE
-LDFLAGS := -Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now,-L../,-rpath,../
-LDLIBS := -lcx
+STANDARD    := -std=c17
+DIAGNOSTICS := -Wall -Wextra -Wpedantic
+DEBUG       := -Og -ggdb3
+ANALYZER    := -fanalyzer -Wanalyzer-too-complex
+SANITIZER   := -fsanitize=address,leak,undefined
+#PROFILING   := -pg -fprofile-arcs --coverage
 
-SRCS := $(notdir $(wildcard src/*.c))
-OBJS := $(patsubst %.c,%.o,$(SRCS))
+CC          := gcc
+CFLAGS      := $(STANDARD) $(DIAGNOSTICS) $(DEBUG) $(ANALYZER) $(SANITIZER) $(PROFILING)
+CPPFLAGS    := -Iinclude -I../include -D_GNU_SOURCE
+LDFLAGS     := -L../ -Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now,-L../,-rpath,../
+LDLIBS      := -lcx -lcheck
 
-TARGET := tests-runner
+SRCS        := $(notdir $(wildcard src/*.c))
+OBJS        := $(patsubst %.c,%.o,$(SRCS))
+
+TARGET      := tests-runner
 
 all: $(TARGET)
 
@@ -27,5 +34,12 @@ check: $(TARGET)
 	@./$(TARGET) horse house cat dog mouse
 
 .PHONY: clean
-clean:
+clean: clean-profiling-data
 	$(RM) $(OBJS) $(TARGET)
+
+.PHONY: clean-profiling-data
+clean-profiling-data:
+	$(RM) ./*.{gcda,gcno,gcov,out}
+
+.PHONY: distclean
+distclean: clean clean-profiling-data

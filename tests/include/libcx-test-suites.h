@@ -20,29 +20,12 @@
  *
  */
 
-#include <stddef.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include <check.h>
+#ifndef PROJECT_INCLUDES_LIBCX_TEST_SUITES_H
+#define PROJECT_INCLUDES_LIBCX_TEST_SUITES_H
 
 #include <libcx.h>
-#include <libcx-test-suites.h>
 
-int main(void)
-{
-    Suite* main_test_suite = suite_create("libcx Tests");
-    SRunner* test_runner = srunner_create(main_test_suite);
+#include "memory-test-suite.h"
+#include "string-test-suite.h"
 
-    srunner_add_suite(test_runner, memory_test_suite());
-    srunner_add_suite(test_runner, string_test_suite());
-
-    srunner_run_all(test_runner, CK_VERBOSE);
-
-    int tests_failed = srunner_ntests_failed(test_runner);
-
-    srunner_free(test_runner);
-
-    return tests_failed;
-}
+#endif /** PROJECT_INCLUDES_LIBCX_TEST_SUITES_H */

@@ -22,8 +22,7 @@
 
 #include <stddef.h>
 #include <stdlib.h>
-
-#include "memory.h"
+#include <libcx.h>
 
 /**
  * This function is meant to replace direct calls to malloc,

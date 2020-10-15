@@ -30,6 +30,8 @@
  * moment is malloc(3).
  *
  */
-void* allocate_memory_block(size_t size);
+void*
+__attribute__((alloc_size(1),malloc,returns_nonnull))
+allocate_memory_block(size_t size);
 
 #endif /** PROJECT_INCLUDES_LIBCX_MEMORY_H */
